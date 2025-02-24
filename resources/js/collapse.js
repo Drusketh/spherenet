@@ -27,38 +27,3 @@
         }
     }
 )();
-
-(
-    function(){
-        var counts = document.querySelectorAll("[data-count]");
-        const countp = document.getElementsByName('counts')[0];
-        const html = countp.value;
-        const arr = html.split('","');
-        let mhtml = "";
-        let idx = 0;
-
-        if (counts) {
-            return Array.from(counts).forEach(
-                function(count){
-                    count.addEventListener("change", function() {
-                        const name = count.getAttribute('data-count');
-                        const value = count.value;
-
-                        for (var j = 0; j < arr.length; j++) {
-                            if (arr[j].match(name)) {
-                                arr[j+1] = value;
-                                mhtml = arr.join('","');
-                            }
-                        }
-                        if (name === "Nuclear Reactor") {
-                            console.log("Nuking is now Legal");
-                            mhtml = mhtml + '\"]';
-                        }
-                        console.log(mhtml);
-                        countp.value = mhtml;
-                    })
-                }
-            )
-        }
-    }
-)();

@@ -203,6 +203,22 @@
                         <div>
                     </div>
                 </ul>
+
+                <ul>
+                    <div class="icard h-screen resource-card min-w-72 max-w-72">
+                        <div class="icard-header">
+                            <span class="icard-name">ADD FACS BY JSON</span>
+                        </div>
+                        <form action="{{ route('factories.jadd') }}" method="POST" enctype="multipart/form-data">
+                            @csrf 
+                            <div class="resource-label">JSON</div>
+                            <input class="min-h-42" type="text" name="json">
+                            <br></br>
+
+                            <button type="submit" class="create-button">SUBMIT</button>
+                        </form>
+                    </div>
+                </ul>
             </div>
         </div>
         <!-- <div class="resource-list">

@@ -87,7 +87,7 @@
                 {{ __('Chat') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
-                        {{ __('Admin Panel') }}
+                {{ __('Admin Panel') }}
             </x-responsive-nav-link>
         </div>
 

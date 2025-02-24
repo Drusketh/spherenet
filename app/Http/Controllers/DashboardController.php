@@ -16,13 +16,13 @@ class DashboardController extends Controller
 {
     public function index(): View
     {
-        $data = DB::table('users')->where('id', Auth::id())->select('factories')->get();
-        $factories = json_decode(json_encode($data, true), true);
-
+        $data = json_decode(json_encode(DB::table('users')->where('id', Auth::id())->get(), true), true)[0];
 
         return view('dashboard.index', [
             'factories' => Factory::get(),
-            'ufac' => $factories[0]
+            'ufac' => array($data["factories"]),
+            'pop' => $data["population"],
+            'con' => $data["continent"],
         ]);
     }
 
@@ -37,14 +37,6 @@ class DashboardController extends Controller
             return Redirect::back()->with('message', $request->counts);
         }
 
-        
-
-        
-
         return redirect()->route('dashboard.index')->with('success', 'updated');
-
-        
-
-        // 
     }
 }

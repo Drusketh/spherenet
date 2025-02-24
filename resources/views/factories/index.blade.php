@@ -11,16 +11,16 @@
                         $output = explode(":", str_replace(",", ":", $factory->output));
                     @endphp
 
-                    <!-- <div class="icard resource-card min-w-72 max-w-72 max-h-md overflow-auto">
+                    <div class="icard resource-card min-w-72 max-w-72 max-h-md overflow-auto">
                         <div class="factory-name">{{ $factory->name  }}</div>
                         <input type="number" class="collection-input"min="1" value="1">
-                        <div class="factory-section">
+                        <div class="factory-section name">
                             <div class="resource-label">LAND USAGE</div>
                             <div class="factory-value">
                                 <img class="resource-icon" src="images/{{ $land[0] }}.webp"><p>{{ $land[1] }}</p>
                             </div>
                         </div>
-                        <div class="factory-section">
+                        <div class="factory-section cost">
                             <div class="resource-label">COSTS</div>
                             <div class="factory-value">
                                 @foreach($cost as $c)
@@ -32,7 +32,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="factory-section">
+                        <div class="factory-section input">
                             <div class="resource-label">INPUT</div>
                             <div class="factory-value">
                                 @foreach($input as $c)
@@ -44,7 +44,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="factory-section">
+                        <div class="factory-section output">
                             <div class="resource-label">OUTPUT</div>
                             <div class="factory-value">
                                 @foreach($output as $c)
@@ -56,10 +56,14 @@
                                 @endforeach
                             </div>
                         </div>
-                        <button class="create-button">BUILD</button>
-                    </div> -->
+                    </div>
                 @endforeach
             </div>
         </div>
     </div>
+    <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </x-responsive-nav-link>
 </x-app-layout>

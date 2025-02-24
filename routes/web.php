@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\ChirpController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\FactoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Controller;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,8 +34,12 @@ Route::resource('resources', ResourceController::class)
     ->middleware(['auth']);
 
 Route::resource('factories', FactoryController::class)
-    ->only(['index', 'store', 'destroy'])
+    ->only(['index', 'store', 'destroy', 'show', 'json'])
     ->middleware(['auth']);
+
+Route::post('factories/jadd', [FactoryController::class, 'jadd'])->name('factories.jadd');
+
+Route::post('dashboard/pop', [UserController::class, 'pop'])->name('user.pop');
 
 Route::resource('dashboard', DashboardController::class)
     ->only(['index', 'store'])

@@ -8,11 +8,26 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response; 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ResourceController extends Controller
 {
     public function index(): View
     {
+        // $input = Storage::disk('public')->get('resources.json');
+        // $object = json_decode($input, true);
+
+        // foreach ($object as $key => $value){
+        //     print_r($value);
+        //     DB::table('resources')->insert($value);
+        // }
+
+        // foreach ($object as $key => $value){
+        //     print_r($value);
+        //     echo '<br/>';
+        // }
+        
         return view('resources.index', [
             'resources' => Resource::get()
         ]);

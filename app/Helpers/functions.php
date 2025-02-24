@@ -62,13 +62,17 @@ function makeAssoc($in, $key) {
     $outassoc = [];
     $output = [];
 
-    $prep = str_replace(array("{", "}", '"'), array("", "", ""), explode(",", $in));
+    $prep = explode(",", str_replace(array("[", "]", '"', ":"), array("", "", "", ","), $in));
 
-    for($i = 0; $i < count($prep); $i++) {
-        $arr = explode(':', $prep[$i]);
-        $keys[] = $arr[0];
-        $vals[] = $arr[1];
+    foreach ($prep as $k => $v) {
+        if ($k % 2 == 0) {
+            $keys[] = $v;
+        }
+        else {
+            $vals[] = $v;
+        }
     }
+
     $outassoc = array_combine($keys, $vals);
 
     $output = array($outassoc, $keys);

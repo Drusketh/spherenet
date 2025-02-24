@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Factory;
+use App\Models\Resource;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use App\Models\Resource;
-use App\Models\Factory;
+use Illuminate\Support\Facades\Gate;
+
 
 class AdminController extends Controller
 {
@@ -15,7 +17,6 @@ class AdminController extends Controller
      */
     public function index(): View
     {
-        // $resource = DB::table('resources')->select('id','name')->get();
         return view('admin.index', ['resources' => Resource::get(), 'factories' => Factory::get()]);
     }
 

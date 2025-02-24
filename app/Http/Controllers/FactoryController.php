@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Factory;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -13,25 +14,8 @@ use Illuminate\Support\Facades\DB;
 
 class FactoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): View
     {   
-        // $input = Storage::disk('public')->get('factoriy.json');
-        // $object = json_decode($input, true);
-        // $put = json_encode($object, JSON_PRETTY_PRINT);
-        
-        // print_r($object);
-        // echo '<br/>';
-
-        // DB::table('users')->where('id','1')->update(['factories' => $object]);
-
-        // foreach ($object as $key => $value){
-        //     print_r($value);
-        //     echo '<br/>';
-        // }
-
         $factories = Factory::get();
 
         return view('factories.index', [
@@ -39,12 +23,20 @@ class FactoryController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function jadd(Request $request)
     {
-        //
+        $request->validate([
+            'json' => 'required',
+        ]);
+
+        $input = $request->json;
+        $object = json_decode($input, true);
+
+        foreach ($object as $key => $value){
+            DB::table('factories')->insert($value);
+        }
+        
+        return redirect()->route('admin.index');
     }
 
     /**
@@ -92,6 +84,17 @@ class FactoryController extends Controller
         $factory->input = $input;
         $factory->output = $output;
         $factory->save();
+
+        $req = DB::table('users')->get();
+        $users = json_decode($req, true);
+
+        foreach ($users as $k => $v) {
+            $facs = str_replace("]", "", $v["factories"]);
+            $facs .= "," . "\"$factory->name\"" . ":\"0\"]";
+            
+            DB::table('users')->where('id', $v["id"])->update(['factories' => $facs]);
+        }
+        
         return redirect()->route('admin.index')->with('success', 'Factory created successfully.');
     }
 
@@ -100,7 +103,16 @@ class FactoryController extends Controller
      */
     public function show(Factory $factory)
     {
-        //
+        // $input = Storage::disk('public')->get('factoriy.json');
+        // $object = json_decode($input, true);
+        // $put = json_encode($object, JSON_PRETTY_PRINT);
+        
+        // print_r($object);
+        // echo '<br/>';
+
+        // DB::table('users')->where('id',Auth::user()->id)->update(['factories' => $object]);
+    
+        // return redirect()->route('dashboard.index');
     }
 
     /**
@@ -142,8 +154,8 @@ class FactoryController extends Controller
     {
         Gate::authorize('delete', $factory);
 
-        $resource->delete();
+        $factory->delete();
 
-        return redirect(route('resources.index'));
+        return redirect(route('factories.index'));
     }
 }
